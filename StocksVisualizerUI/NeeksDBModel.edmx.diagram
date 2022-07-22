@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="37388d7286e34c429828166d0c63af56" Name="Diagram1">
+        <EntityTypeShape EntityType="NeeksDBModel.Sector" Width="1.5" PointX="0.875" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NeeksDBModel.Exchange" Width="1.5" PointX="3.375" PointY="5.875" />
+        <EntityTypeShape EntityType="NeeksDBModel.HistoricalData" Width="1.5" PointX="6.625" PointY="1.875" />
+        <EntityTypeShape EntityType="NeeksDBModel.MarketCapitalization" Width="1.5" PointX="4" PointY="9.125" />
+        <EntityTypeShape EntityType="NeeksDBModel.MEXSector" Width="1.5" PointX="5.375" PointY="6" />
+        <EntityTypeShape EntityType="NeeksDBModel.MEXSectorData" Width="1.5" PointX="7.625" PointY="5.875" />
+        <AssociationConnector Association="NeeksDBModel.FK_MEXSectorData_MEXSector" />
+        <EntityTypeShape EntityType="NeeksDBModel.SectorData_V" Width="1.5" PointX="9.25" PointY="0.625" />
+        <EntityTypeShape EntityType="NeeksDBModel.LastUpdatedMinData_V" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="NeeksDBModel.MinuteDataTester" Width="1.5" PointX="6.375" PointY="12" />
+        <EntityTypeShape EntityType="NeeksDBModel.LastUpdatedMinData_VTester" Width="1.5" PointX="6.375" PointY="8.75" />
+        <EntityTypeShape EntityType="NeeksDBModel.MinuteData" Width="1.5" PointX="4" PointY="12.125" />
+        <EntityTypeShape EntityType="NeeksDBModel.Holiday" Width="1.5" PointX="8.375" PointY="8.75" />
+        <EntityTypeShape EntityType="NeeksDBModel.Stock" Width="1.5" PointX="1.25" PointY="0.5" />
+        <AssociationConnector Association="NeeksDBModel.FK_HistoricalData_Stock" />
+        <AssociationConnector Association="NeeksDBModel.FK_MarketCapitalization_Stock" />
+        <AssociationConnector Association="NeeksDBModel.FK_MinuteData_Stock" />
+        <AssociationConnector Association="NeeksDBModel.FK_MinuteDataTester_Stock" />
+        <AssociationConnector Association="NeeksDBModel.FK_Stock_Sector" />
+        <EntityTypeShape EntityType="NeeksDBModel.SampleStat" Width="1.5" PointX="9.25" PointY="3.25" />
+        <AssociationConnector Association="NeeksDBModel.FK_Stats_Stock" />
+        <EntityTypeShape EntityType="NeeksDBModel.Stocks_V" Width="1.875" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

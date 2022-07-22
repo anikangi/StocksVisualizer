@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NeeksDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HistoricalData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Open" Type="float" Nullable="false" />
+          <Property Name="Close" Type="float" Nullable="false" />
+          <Property Name="High" Type="float" Nullable="false" />
+          <Property Name="Low" Type="float" Nullable="false" />
+          <Property Name="Volume" Type="bigint" Nullable="false" />
+          <Property Name="MarketCap" Type="bigint" />
+        </EntityType>
+        <EntityType Name="MarketCapitalization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+          <Property Name="MarketCap" Type="bigint" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Company" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Exchange" Type="nvarchar" MaxLength="200" />
+          <Property Name="Industry" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IssueType" Type="nvarchar" MaxLength="10" />
+          <Property Name="SectorID" Type="bigint" />
+          <Property Name="Employees" Type="int" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NeeksDB.dbo.Stocks_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Stocks_V">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Symbol" />
+            <PropertyRef Name="Company" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Company" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Exchange" Type="nvarchar" MaxLength="200" />
+          <Property Name="Industry" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IssueType" Type="nvarchar" MaxLength="10" />
+          <Property Name="SectorID" Type="bigint" />
+          <Property Name="Employees" Type="int" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdatedDate" Type="date" />
+        </EntityType>
+        <Association Name="FK_HistoricalData_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="HistoricalData" Type="Self.HistoricalData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistoricalData">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MarketCapitalization_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="MarketCapitalization" Type="Self.MarketCapitalization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MarketCapitalization">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NeeksDBModelStoreContainer">
+          <EntitySet Name="HistoricalData" EntityType="Self.HistoricalData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarketCapitalization" EntityType="Self.MarketCapitalization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stocks_V" EntityType="Self.Stocks_V" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Stocks_V].[ID] AS [ID], 
+    [Stocks_V].[Symbol] AS [Symbol], 
+    [Stocks_V].[Company] AS [Company], 
+    [Stocks_V].[Exchange] AS [Exchange], 
+    [Stocks_V].[Industry] AS [Industry], 
+    [Stocks_V].[Description] AS [Description], 
+    [Stocks_V].[IssueType] AS [IssueType], 
+    [Stocks_V].[SectorID] AS [SectorID], 
+    [Stocks_V].[Employees] AS [Employees], 
+    [Stocks_V].[City] AS [City], 
+    [Stocks_V].[State] AS [State], 
+    [Stocks_V].[Country] AS [Country], 
+    [Stocks_V].[LastUpdatedDate] AS [LastUpdatedDate]
+    FROM [dbo].[Stocks_V] AS [Stocks_V]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_HistoricalData_Stock" Association="Self.FK_HistoricalData_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="HistoricalData" EntitySet="HistoricalData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MarketCapitalization_Stock" Association="Self.FK_MarketCapitalization_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="MarketCapitalization" EntitySet="MarketCapitalization" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NeeksDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HistoricalData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Open" Type="Double" Nullable="false" />
+          <Property Name="Close" Type="Double" Nullable="false" />
+          <Property Name="High" Type="Double" Nullable="false" />
+          <Property Name="Low" Type="Double" Nullable="false" />
+          <Property Name="Volume" Type="Int64" Nullable="false" />
+          <Property Name="MarketCap" Type="Int64" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_HistoricalData_Stock" FromRole="HistoricalData" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="MarketCapitalization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <Property Name="MarketCap" Type="Int64" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_MarketCapitalization_Stock" FromRole="MarketCapitalization" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exchange" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Industry" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IssueType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SectorID" Type="Int64" />
+          <Property Name="Employees" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HistoricalDatas" Relationship="Self.FK_HistoricalData_Stock" FromRole="Stock" ToRole="HistoricalData" />
+          <NavigationProperty Name="MarketCapitalizations" Relationship="Self.FK_MarketCapitalization_Stock" FromRole="Stock" ToRole="MarketCapitalization" />
+        </EntityType>
+        <EntityType Name="Stocks_V">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Symbol" />
+            <PropertyRef Name="Company" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Company" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exchange" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Industry" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IssueType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SectorID" Type="Int64" />
+          <Property Name="Employees" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_HistoricalData_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="HistoricalData" Type="Self.HistoricalData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistoricalData">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MarketCapitalization_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="MarketCapitalization" Type="Self.MarketCapitalization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MarketCapitalization">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NeeksDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HistoricalDatas" EntityType="Self.HistoricalData" />
+          <EntitySet Name="MarketCapitalizations" EntityType="Self.MarketCapitalization" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <EntitySet Name="Stocks_V" EntityType="Self.Stocks_V" />
+          <AssociationSet Name="FK_HistoricalData_Stock" Association="Self.FK_HistoricalData_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="HistoricalData" EntitySet="HistoricalDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MarketCapitalization_Stock" Association="Self.FK_MarketCapitalization_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="MarketCapitalization" EntitySet="MarketCapitalizations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NeeksDBModelStoreContainer" CdmEntityContainer="NeeksDBEntities">
+          <EntitySetMapping Name="HistoricalDatas">
+            <EntityTypeMapping TypeName="NeeksDBModel.HistoricalData">
+              <MappingFragment StoreEntitySet="HistoricalData">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="Close" ColumnName="Close" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MarketCapitalizations">
+            <EntityTypeMapping TypeName="NeeksDBModel.MarketCapitalization">
+              <MappingFragment StoreEntitySet="MarketCapitalization">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="NeeksDBModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Exchange" ColumnName="Exchange" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="Employees" ColumnName="Employees" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks_V">
+            <EntityTypeMapping TypeName="NeeksDBModel.Stocks_V">
+              <MappingFragment StoreEntitySet="Stocks_V">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Exchange" ColumnName="Exchange" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="Employees" ColumnName="Employees" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

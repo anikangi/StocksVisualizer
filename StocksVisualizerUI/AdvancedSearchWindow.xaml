@@ -1,0 +1,233 @@
+﻿<Window x:Class="StocksVisualizerUI.AdvancedSearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StocksVisualizerUI"
+        mc:Ignorable="d"
+        Title="AdvancedSearchWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+
+        <Label VerticalAlignment="Bottom" Margin="10,0,10.4,30" FontWeight="UltraBold" Grid.RowSpan="2">Find stocks where...</Label>
+        <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="10,7.4,9.4,7">1 Year Trend is:</TextBlock>
+        <TextBlock Grid.Row="2" VerticalAlignment="Center" Margin="10,7,9.4,7.4">6 Month Trend is:</TextBlock>
+        <TextBlock Grid.Row="3" VerticalAlignment="Center" Margin="10,7.6,9.4,6.8">3 Month Trend is:</TextBlock>
+        <TextBlock Grid.Row="4" VerticalAlignment="Center" Margin="10,7.2,9.4,7.2">1 Month Trend is:</TextBlock>
+
+        <ComboBox Name="_1yrTrend" Grid.Column="1" Grid.Row="1" Margin="4.6,5.4,0,5" Width="150" HorizontalAlignment="Left">
+            <ComboBoxItem Content="None"/>
+            <ComboBoxItem Content="Uptrend"/>
+            <ComboBoxItem Content="Downtrend"/>
+            <ComboBoxItem Content="Consolidating"/>
+        </ComboBox>
+        <ComboBox Name="_6moTrend" Grid.Column="1" Grid.Row="2" Margin="4.6,5,0,5.4" Width="150" HorizontalAlignment="Left">
+            <ComboBoxItem Content="None"/>
+            <ComboBoxItem Content="Uptrend"/>
+            <ComboBoxItem Content="Downtrend"/>
+            <ComboBoxItem Content="Consolidating"/>
+        </ComboBox>
+        <ComboBox Name="_3moTrend" Grid.Column="1" Grid.Row="3" Margin="4.6,4.6,0,4.8" Width="150" HorizontalAlignment="Left">
+            <ComboBoxItem Content="None"/>
+            <ComboBoxItem Content="Uptrend"/>
+            <ComboBoxItem Content="Downtrend"/>
+            <ComboBoxItem Content="Consolidating"/>
+        </ComboBox>
+        <ComboBox Name="_1moTrend" Grid.Column="1" Grid.Row="4" Margin="4.6,5.2,0,5.2" Width="150" HorizontalAlignment="Left">
+            <ComboBoxItem Content="None"/>
+            <ComboBoxItem Content="Uptrend"/>
+            <ComboBoxItem Content="Downtrend"/>
+            <ComboBoxItem Content="Consolidating"/>
+        </ComboBox>
+
+        <TextBlock Name="error_label" Foreground="Red" Grid.Column="2" Margin="3, 0" VerticalAlignment="Bottom"/>
+        <GroupBox Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" BorderThickness="2.5" Margin="0,0,10,0">
+            <Grid Margin="0,0,-0.2,-5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="368"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Name="stDev_stackPanel" Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Bottom" Margin="2,0,2.8,1.6" Height="23">
+                    <CheckBox Name="stDev_filter" Content="Most recent day's Standard Deviation (SD) is " VerticalAlignment="Center"/>
+                    <ComboBox Name="stDev_symbol" VerticalAlignment="Bottom" Margin="0,0,0,0.2">
+                        <ComboBoxItem Content=">" IsSelected="True"/>
+                        <ComboBoxItem Content="&lt;"/>
+                        <ComboBoxItem Content="="/>
+                    </ComboBox>
+                    <TextBlock Text=" AVG SD " VerticalAlignment="Center"/>
+                    <TextBox Text="0-23" Visibility="Collapsed" FontStyle="Italic" Foreground="Gray" VerticalAlignment="Center"/>
+                    <TextBlock Text=" days" Visibility="Collapsed" VerticalAlignment="Center"/>
+                    <Button Name="info_btn1" Background="White" BorderThickness="0" VerticalAlignment="Bottom" MouseEnter="Info_btn1_MouseEnter" MouseLeave="Info_btn1_MouseLeave" Click="Info_btn1_Click">
+
+                        <StackPanel>
+                            <Image Source="C:\Anika\Data Access\APIs\StocksVisualizerUI\StocksVisualizerUI\images\i_icon.jpg" Stretch="UniformToFill" StretchDirection="Both" Opacity=".3" Height="17" Width="17"  />
+
+                        </StackPanel>
+
+                    </Button>
+
+                    <Popup Name="popup1" IsEnabled="True" Placement="Left" PlacementTarget="{Binding ElementName=info_btn1}">
+                        <TextBlock Text="Calculates the price's standard deviaton of the stock's most recent day in database, and compares it with the stock's average standard deviation for all days in the database." TextWrapping="Wrap" MaxWidth="300" Background="AliceBlue" FontWeight="DemiBold"/>
+                    </Popup>
+
+
+
+                </StackPanel>
+                <StackPanel Name="amtOfTrades_stackPanel" Orientation="Horizontal" Grid.Row="1" VerticalAlignment="top" Margin="2,2.4,2.8,0" Height="22">
+                    <CheckBox Name="tradesAmt_filter" Content="Most recent day's # of Trades " VerticalAlignment="Center"/>
+                    <ComboBox Name="amtTrades_symbol" VerticalAlignment="Center">
+                        <ComboBoxItem Content=">" IsSelected="True"/>
+                        <ComboBoxItem Content="&lt;"/>
+                        <ComboBoxItem Content="="/>
+                    </ComboBox>
+                    <TextBlock Text=" AVG # of trades " VerticalAlignment="Center"/>
+                    <TextBox Text="0-23" Visibility="Collapsed" FontStyle="Italic" Foreground="Gray" VerticalAlignment="Center"/>
+                    <TextBlock Text=" days" Visibility="Collapsed" VerticalAlignment="Center"/>
+                    <Button Name="info_btn2" Background="White" BorderThickness="0" VerticalAlignment="Bottom" MouseEnter="Info_btn2_MouseEnter" MouseLeave="Info_btn2_MouseLeave" Click="Info_btn2_Click" >
+
+                        <StackPanel>
+                            <Image Source="C:\Anika\Data Access\APIs\StocksVisualizerUI\StocksVisualizerUI\images\i_icon.jpg" Stretch="UniformToFill" StretchDirection="Both" Opacity=".3" Height="17" Width="17"  />
+
+                        </StackPanel>
+                    </Button>
+
+                    <Popup Name="popup2" IsEnabled="True" Placement="Left" PlacementTarget="{Binding ElementName=info_btn2}">
+                        <TextBlock Text="Calculates the total trades on the stock's most recent day in database, and compares it with the average total trades for all days in the database." MaxWidth="300" Background="AliceBlue" FontWeight="DemiBold" TextWrapping="Wrap"/>
+                    </Popup>
+
+
+                </StackPanel>
+
+                <TextBlock Text="Sample Days:" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                <TextBox Name="amt_sample_days" Text="1-35" Grid.Row="1" TextChanged="Amt_sample_days_TextChanged" 
+                         LostFocus="Amt_sample_days_LostFocus" GotFocus="Amt_sample_days_GotFocus"
+                         Foreground="Gray" FontStyle="Italic" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            </Grid>
+        </GroupBox>
+
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,0" HorizontalAlignment="Left">
+            <TextBlock Text="Search:  " FontSize="14" FontWeight="DemiBold" />
+            <TextBox Name="stocks_search" Width="60" TextChanged="Stocks_search_TextChanged"/>
+            <TextBlock Name="empty_datagrid_msg" Grid.Row="5" Margin="10, 0" Visibility="Collapsed" Grid.ColumnSpan="2" FontSize="12" Text="No stocks fit the given criteria."  HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="DemiBold" Foreground="DarkRed"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button Click="Enter_Click" Width="30">Enter</Button>
+            <Separator Opacity="0" Width="40"/>
+            <Button Click="Clear_Click" Width="30">Clear</Button>
+        </StackPanel>
+
+        <DataGrid Grid.Row="6" FontSize="14" Name="filtered_grid" ColumnWidth="Auto" IsReadOnly="True" AutoGenerateColumns="False" Margin="10" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" FontWeight="DemiBold"/>
+                <DataGridTextColumn Binding="{Binding Company}" Header="Company" />
+                <DataGridTextColumn Binding="{Binding _1yrTrend}" Header="1 Year">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="Uptrend">
+                                    <Setter Property="Foreground" Value="ForestGreen"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Downtrend">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Consolidating">
+                                    <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding _6moTrend}" Header="6 Month">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="Uptrend">
+                                    <Setter Property="Foreground" Value="ForestGreen"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Downtrend">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Consolidating">
+                                    <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding _3moTrend}" Header="3 Month">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="Uptrend">
+                                    <Setter Property="Foreground" Value="ForestGreen"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Downtrend">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Consolidating">
+                                    <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding _1moTrend}" Header="1 Month">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="Uptrend">
+                                    <Setter Property="Foreground" Value="ForestGreen"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Downtrend">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="Text" Value="Consolidating">
+                                    <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+
+            <DataGrid.AlternatingRowBackground>
+                <SolidColorBrush Color="Gray" Opacity="0.3"/>
+            </DataGrid.AlternatingRowBackground>
+
+            <DataGrid.VerticalGridLinesBrush>
+                <SolidColorBrush Color="Black" Opacity="0.3"/>
+            </DataGrid.VerticalGridLinesBrush>
+
+        </DataGrid>
+    </Grid>
+</Window>

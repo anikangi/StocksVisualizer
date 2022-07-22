@@ -1,0 +1,107 @@
+﻿<Window x:Class="StocksVisualizerUI.StockLinRegChart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StocksVisualizerUI"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="StockLinRegChart" Height="450" Width="800"
+        Closing="Window_Closing">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="225"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Name="linreg_panel" Grid.Column="0">
+            <Label Name="linreg_chart_title" Content="change title later" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" DockPanel.Dock="Top" Foreground="DimGray"/>
+            <lvc:CartesianChart Name="stock_chart" LegendLocation="Top" Series="{Binding seriesCollection}">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Name="x_axis"  Title="Date" ShowLabels="True" Labels="{Binding XAxisDates}"/>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Name="y_axis" Position="LeftBottom" Title="Price" ShowLabels="True" LabelFormatter="{Binding YFormatter}"/>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+            <!--make sure to bind this to a series collection-->
+        </DockPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center">
+            <GroupBox Name="Groupbox1" BorderThickness="3" Margin="7, 7, 7, 0" VerticalAlignment="Center" >
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 10">
+                        <TextBlock Name="y_hat" FontStyle="Italic" FontWeight="Medium" Text="&#375; = " HorizontalAlignment="Center"/>
+                        <TextBlock Name="LSRSL_equation" FontStyle="Italic" FontWeight="Medium" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Name="r" Text="r =" ToolTip="Correlation coefficient" Margin="5, 0"/>
+                    <TextBlock Name="r_squared" Text="r² = " ToolTip="Coefficient of determination" Margin="5, 0"/>
+                    <TextBlock Name="m" Text="m = " ToolTip="Slope" Margin="5, 0"/>
+                    <TextBlock Name="m_degrees" Text="m (°) = " ToolTip="Slope (in degrees)" Margin="5, 0"/>
+                    <TextBlock Name="b" Text="b = $" ToolTip="Y-intercept" Margin="5, 0"/>
+                    <TextBlock Name="s" Text="s = " ToolTip="Standard deviation of residuals" Margin="5, 0"/>
+                </StackPanel>
+
+            </GroupBox>
+            <GroupBox BorderThickness="3" Margin="7, 0, 7, 0" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="84"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <Label FontWeight="Medium" Margin="5, 5, 5, 0" Content="Time Period:" Grid.Column="0" Grid.Row="0"/>
+                    <CheckBox Name="Show_LSRL" Foreground="DimGray" FontSize="10" Margin="5, 5, 5, 0" Content="Show LSRL" ToolTip="LSRL: Least Squared Regression Line" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Checked="Show_LSRL_Checked" Unchecked="Show_LSRL_Unchecked"/>
+
+                    <RadioButton Name="selection_1yr" Content="1 year" Margin="5,1.6,5,0" Foreground="DeepSkyBlue" FontWeight="Bold" Background="DeepSkyBlue" BorderBrush="DeepSkyBlue" Grid.Column="0" Grid.Row="1" Height="16" VerticalAlignment="Top" Checked="Selection_1yr_Checked"/>
+                    <RadioButton Name="selection_6mo" Content="6 months" Margin="5, 2" Foreground="MediumVioletRed" FontWeight="Bold" Background="MediumVioletRed" BorderBrush="MediumVioletRed" Grid.Column="0" Grid.Row="2" Checked="Selection_6mo_Checked" />
+                    <RadioButton Name="selection_3mo" Content="3 months" Margin="5, 2" Foreground="YellowGreen" FontWeight="Bold" Background="YellowGreen" BorderBrush="YellowGreen" Grid.Column="0" Grid.Row="3" Checked="Selection_3mo_Checked"/>
+                    <RadioButton Name="selection_1mo" Content="1 month" Margin="5, 2" Foreground="BlueViolet" FontWeight="Bold" Background="BlueViolet" BorderBrush="BlueViolet" Grid.Column="0" Grid.Row="4" Checked="Selection_1mo_Checked"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox BorderThickness="3" Margin="7, 0, 7, 7" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="47"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Trends:" Margin="5, 5, 5, 0" FontWeight="Medium"  Grid.ColumnSpan="2"/>
+                    <Label Content="1 YR:"  Margin="5,0,0,0" Grid.Row="1" Grid.Column="0"/>
+                    <Label Name="tp_1YR" Content="temp content" Grid.Row="1" Grid.Column="1" FontWeight="Bold"/>
+
+                    <Label Content="6 MO:" Margin="5,0,0,0" Grid.Row="2" Grid.Column="0"/>
+                    <Label Name="tp_6MO" Content="temp content" Grid.Row="2" Grid.Column="1" FontWeight="Bold"/>
+
+                    <Label Content="3 MO:" Margin="5,0,0,0" Grid.Row="3" Grid.Column="0"/>
+                    <Label Name="tp_3MO" Content="temp content"  Grid.Row="3" Grid.Column="1" FontWeight="Bold"/>
+
+                    <Label Content="1 MO:" Margin="5,0,0,0"  Grid.Row="4" Grid.Column="0"/>
+                    <Label Name="tp_1MO" Content="temp content"  Grid.Row="4" Grid.Column="1" FontWeight="Bold"/>
+
+
+                </Grid>
+
+            </GroupBox>
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>

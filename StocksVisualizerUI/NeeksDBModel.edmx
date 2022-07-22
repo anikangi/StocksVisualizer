@@ -1,0 +1,923 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NeeksDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Exchange">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="LongName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MIC" Type="nvarchar" MaxLength="10" />
+          <Property Name="TapeId" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="HistoricalData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Open" Type="float" Nullable="false" />
+          <Property Name="Close" Type="float" Nullable="false" />
+          <Property Name="High" Type="float" Nullable="false" />
+          <Property Name="Low" Type="float" Nullable="false" />
+          <Property Name="Volume" Type="bigint" Nullable="false" />
+          <Property Name="MarketCap" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Holidays">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="EarlyClose" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MarketCapitalization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+          <Property Name="MarketCap" Type="bigint" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MEXSector">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SectorAssetClassId" Type="int" />
+        </EntityType>
+        <EntityType Name="MEXSectorData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="SectorId" Type="int" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MinuteData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Average" Type="float" Nullable="false" />
+          <Property Name="Volume" Type="bigint" Nullable="false" />
+          <Property Name="AmtOfTrades" Type="bigint" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MinuteDataTester">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Average" Type="float" />
+          <Property Name="Volume" Type="bigint" Nullable="false" />
+          <Property Name="AmtOfTrades" Type="bigint" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SampleStats">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+          <Property Name="StDev" Type="float" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Total_AmtOfTrades" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Company" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Exchange" Type="nvarchar" MaxLength="200" />
+          <Property Name="Industry" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IssueType" Type="nvarchar" MaxLength="10" />
+          <Property Name="SectorID" Type="bigint" />
+          <Property Name="Employees" Type="int" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdated_MinData" Type="datetime" />
+          <Property Name="IsDisabled" Type="bit" />
+          <Property Name="PercentData_LastDay" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="PercentData_SamplePeriod" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="IsTop4000" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NeeksDB.dbo.LastUpdatedMinData_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LastUpdatedMinData_V">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LastUpdatedTime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NeeksDB.dbo.LastUpdatedMinData_VTester' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LastUpdatedMinData_VTester">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LastUpdatedTime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NeeksDB.dbo.SectorData_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SectorData_V">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Time" />
+            <PropertyRef Name="Value" />
+            <PropertyRef Name="SectorId" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="Sector" Type="varchar" MaxLength="50" />
+          <Property Name="SectorId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NeeksDB.dbo.Stocks_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Stocks_V">
+          <Key>
+            <PropertyRef Name="StockID" />
+            <PropertyRef Name="Symbol" />
+            <PropertyRef Name="Company" />
+          </Key>
+          <Property Name="StockID" Type="bigint" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Company" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Sector" Type="nvarchar" MaxLength="50" />
+          <Property Name="Exchange" Type="nvarchar" MaxLength="200" />
+          <Property Name="Industry" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="LastUpdated_MinData" Type="datetime" />
+          <Property Name="IsDisabled" Type="bit" />
+          <Property Name="MarketCap" Type="bigint" />
+          <Property Name="Last_Updated_MC" Type="date" />
+          <Property Name="MostRecent_Stats" Type="datetime" />
+          <Property Name="MostRecent_DailyData" Type="date" />
+        </EntityType>
+        <Association Name="FK_HistoricalData_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="HistoricalData" Type="Self.HistoricalData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistoricalData">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MarketCapitalization_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="MarketCapitalization" Type="Self.MarketCapitalization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MarketCapitalization">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEXSectorData_MEXSector">
+          <End Role="MEXSector" Type="Self.MEXSector" Multiplicity="1" />
+          <End Role="MEXSectorData" Type="Self.MEXSectorData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEXSector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MEXSectorData">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MinuteData_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="MinuteData" Type="Self.MinuteData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MinuteData">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MinuteDataTester_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="MinuteDataTester" Type="Self.MinuteDataTester" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MinuteDataTester">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stats_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="SampleStats" Type="Self.SampleStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SampleStats">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Sector">
+          <End Role="Sector" Type="Self.Sector" Multiplicity="0..1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="SectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetDateRange_Period" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="period" Type="int" Mode="In" />
+          <Parameter Name="stockid" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="GetDateRange_StartEnd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start_date" Type="datetime" Mode="In" />
+          <Parameter Name="end_date" Type="datetime" Mode="In" />
+          <Parameter Name="stockid" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="GetValuesGroupedBySector_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="NeeksDBModelStoreContainer">
+          <EntitySet Name="Exchange" EntityType="Self.Exchange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoricalData" EntityType="Self.HistoricalData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarketCapitalization" EntityType="Self.MarketCapitalization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MEXSector" EntityType="Self.MEXSector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MEXSectorData" EntityType="Self.MEXSectorData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MinuteData" EntityType="Self.MinuteData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MinuteDataTester" EntityType="Self.MinuteDataTester" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SampleStats" EntityType="Self.SampleStats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LastUpdatedMinData_V" EntityType="Self.LastUpdatedMinData_V" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LastUpdatedMinData_V].[ID] AS [ID], 
+    [LastUpdatedMinData_V].[Symbol] AS [Symbol], 
+    [LastUpdatedMinData_V].[LastUpdatedTime] AS [LastUpdatedTime]
+    FROM [dbo].[LastUpdatedMinData_V] AS [LastUpdatedMinData_V]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="LastUpdatedMinData_VTester" EntityType="Self.LastUpdatedMinData_VTester" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LastUpdatedMinData_VTester].[ID] AS [ID], 
+    [LastUpdatedMinData_VTester].[Symbol] AS [Symbol], 
+    [LastUpdatedMinData_VTester].[LastUpdatedTime] AS [LastUpdatedTime]
+    FROM [dbo].[LastUpdatedMinData_VTester] AS [LastUpdatedMinData_VTester]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SectorData_V" EntityType="Self.SectorData_V" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SectorData_V].[Id] AS [Id], 
+    [SectorData_V].[Time] AS [Time], 
+    [SectorData_V].[Value] AS [Value], 
+    [SectorData_V].[Sector] AS [Sector], 
+    [SectorData_V].[SectorId] AS [SectorId]
+    FROM [dbo].[SectorData_V] AS [SectorData_V]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Stocks_V" EntityType="Self.Stocks_V" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Stocks_V].[StockID] AS [StockID], 
+    [Stocks_V].[Symbol] AS [Symbol], 
+    [Stocks_V].[Company] AS [Company], 
+    [Stocks_V].[Sector] AS [Sector], 
+    [Stocks_V].[Exchange] AS [Exchange], 
+    [Stocks_V].[Industry] AS [Industry], 
+    [Stocks_V].[Description] AS [Description], 
+    [Stocks_V].[LastUpdated_MinData] AS [LastUpdated_MinData], 
+    [Stocks_V].[IsDisabled] AS [IsDisabled], 
+    [Stocks_V].[MarketCap] AS [MarketCap], 
+    [Stocks_V].[Last_Updated_MC] AS [Last_Updated_MC], 
+    [Stocks_V].[MostRecent_Stats] AS [MostRecent_Stats], 
+    [Stocks_V].[MostRecent_DailyData] AS [MostRecent_DailyData]
+    FROM [dbo].[Stocks_V] AS [Stocks_V]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_HistoricalData_Stock" Association="Self.FK_HistoricalData_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="HistoricalData" EntitySet="HistoricalData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MarketCapitalization_Stock" Association="Self.FK_MarketCapitalization_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="MarketCapitalization" EntitySet="MarketCapitalization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEXSectorData_MEXSector" Association="Self.FK_MEXSectorData_MEXSector">
+            <End Role="MEXSector" EntitySet="MEXSector" />
+            <End Role="MEXSectorData" EntitySet="MEXSectorData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MinuteData_Stock" Association="Self.FK_MinuteData_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="MinuteData" EntitySet="MinuteData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MinuteDataTester_Stock" Association="Self.FK_MinuteDataTester_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="MinuteDataTester" EntitySet="MinuteDataTester" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stats_Stock" Association="Self.FK_Stats_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="SampleStats" EntitySet="SampleStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Sector" Association="Self.FK_Stock_Sector">
+            <End Role="Sector" EntitySet="Sector" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NeeksDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Stocks" Relationship="NeeksDBModel.FK_Stock_Sector" FromRole="Sector" ToRole="Stock" />
+        </EntityType>
+        <EntityContainer Name="NeeksDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Sectors" EntityType="Self.Sector" />
+          <EntitySet Name="Exchanges" EntityType="NeeksDBModel.Exchange" />
+          <EntitySet Name="HistoricalDatas" EntityType="NeeksDBModel.HistoricalData" />
+          <EntitySet Name="MarketCapitalizations" EntityType="NeeksDBModel.MarketCapitalization" />
+          <EntitySet Name="MEXSectors" EntityType="NeeksDBModel.MEXSector" />
+          <EntitySet Name="MEXSectorDatas" EntityType="NeeksDBModel.MEXSectorData" />
+          <AssociationSet Name="FK_MEXSectorData_MEXSector" Association="NeeksDBModel.FK_MEXSectorData_MEXSector">
+            <End Role="MEXSector" EntitySet="MEXSectors" />
+            <End Role="MEXSectorData" EntitySet="MEXSectorDatas" />
+          </AssociationSet>
+          <EntitySet Name="SectorData_V" EntityType="NeeksDBModel.SectorData_V" />
+          <EntitySet Name="LastUpdatedMinData_V" EntityType="NeeksDBModel.LastUpdatedMinData_V" />
+          <EntitySet Name="MinuteDataTesters" EntityType="NeeksDBModel.MinuteDataTester" />
+          <EntitySet Name="LastUpdatedMinData_VTester" EntityType="NeeksDBModel.LastUpdatedMinData_VTester" />
+          <EntitySet Name="MinuteDatas" EntityType="NeeksDBModel.MinuteData" />
+          <EntitySet Name="Holidays" EntityType="NeeksDBModel.Holiday" />
+          <EntitySet Name="Stocks" EntityType="NeeksDBModel.Stock" />
+          <AssociationSet Name="FK_HistoricalData_Stock" Association="NeeksDBModel.FK_HistoricalData_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="HistoricalData" EntitySet="HistoricalDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MarketCapitalization_Stock" Association="NeeksDBModel.FK_MarketCapitalization_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="MarketCapitalization" EntitySet="MarketCapitalizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MinuteData_Stock" Association="NeeksDBModel.FK_MinuteData_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="MinuteData" EntitySet="MinuteDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MinuteDataTester_Stock" Association="NeeksDBModel.FK_MinuteDataTester_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="MinuteDataTester" EntitySet="MinuteDataTesters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Sector" Association="NeeksDBModel.FK_Stock_Sector">
+            <End Role="Sector" EntitySet="Sectors" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <EntitySet Name="SampleStats" EntityType="NeeksDBModel.SampleStat" />
+          <AssociationSet Name="FK_Stats_Stock" Association="NeeksDBModel.FK_Stats_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="SampleStat" EntitySet="SampleStats" />
+          </AssociationSet>
+          <FunctionImport Name="GetValuesGroupedBySector_sp" ReturnType="Collection(NeeksDBModel.GetValuesGroupedBySector_sp_Result)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetDateRange_Period" ReturnType="Collection(DateTime)">
+            <Parameter Name="period" Mode="In" Type="Int32" />
+            <Parameter Name="stockid" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="Stocks_V" EntityType="NeeksDBModel.Stocks_V" />
+          <FunctionImport Name="GetDateRange_StartEnd" ReturnType="Collection(DateTime)">
+            <Parameter Name="start_date" Mode="In" Type="DateTime" />
+            <Parameter Name="end_date" Mode="In" Type="DateTime" />
+            <Parameter Name="stockid" Mode="In" Type="Int64" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="Exchange">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LongName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MIC" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TapeId" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="HistoricalData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Open" Type="Double" Nullable="false" />
+          <Property Name="Close" Type="Double" Nullable="false" />
+          <Property Name="High" Type="Double" Nullable="false" />
+          <Property Name="Low" Type="Double" Nullable="false" />
+          <Property Name="Volume" Type="Int64" Nullable="false" />
+          <Property Name="MarketCap" Type="Int64" />
+          <NavigationProperty Name="Stock" Relationship="NeeksDBModel.FK_HistoricalData_Stock" FromRole="HistoricalData" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="MarketCapitalization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <Property Name="MarketCap" Type="Int64" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Stock" Relationship="NeeksDBModel.FK_MarketCapitalization_Stock" FromRole="MarketCapitalization" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="MEXSector">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SectorAssetClassId" Type="Int32" />
+          <NavigationProperty Name="MEXSectorDatas" Relationship="NeeksDBModel.FK_MEXSectorData_MEXSector" FromRole="MEXSector" ToRole="MEXSectorData" />
+        </EntityType>
+        <EntityType Name="MEXSectorData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SectorId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <NavigationProperty Name="MEXSector" Relationship="NeeksDBModel.FK_MEXSectorData_MEXSector" FromRole="MEXSectorData" ToRole="MEXSector" />
+        </EntityType>
+        <Association Name="FK_MEXSectorData_MEXSector">
+          <End Type="NeeksDBModel.MEXSector" Role="MEXSector" Multiplicity="1" />
+          <End Type="NeeksDBModel.MEXSectorData" Role="MEXSectorData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEXSector">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MEXSectorData">
+              <PropertyRef Name="SectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SectorData_V">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Time" />
+            <PropertyRef Name="Value" />
+            <PropertyRef Name="SectorId" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="Sector" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SectorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LastUpdatedMinData_V">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MinuteDataTester">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Average" Type="Double" />
+          <Property Name="Volume" Type="Int64" Nullable="false" />
+          <Property Name="AmtOfTrades" Type="Int64" Nullable="false" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Stock" Relationship="NeeksDBModel.FK_MinuteDataTester_Stock" FromRole="MinuteDataTester" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="LastUpdatedMinData_VTester">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MinuteData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Average" Type="Double" Nullable="false" />
+          <Property Name="Volume" Type="Int64" Nullable="false" />
+          <Property Name="AmtOfTrades" Type="Int64" Nullable="false" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Stock" Relationship="NeeksDBModel.FK_MinuteData_Stock" FromRole="MinuteData" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EarlyClose" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Company" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Exchange" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Industry" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IssueType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SectorID" Type="Int64" />
+          <Property Name="Employees" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated_MinData" Type="DateTime" Precision="3" />
+          <Property Name="IsDisabled" Type="Boolean" />
+          <Property Name="PercentData_LastDay" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PercentData_SamplePeriod" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="IsTop4000" Type="Boolean" />
+          <NavigationProperty Name="HistoricalDatas" Relationship="NeeksDBModel.FK_HistoricalData_Stock" FromRole="Stock" ToRole="HistoricalData" />
+          <NavigationProperty Name="MarketCapitalizations" Relationship="NeeksDBModel.FK_MarketCapitalization_Stock" FromRole="Stock" ToRole="MarketCapitalization" />
+          <NavigationProperty Name="MinuteDatas" Relationship="NeeksDBModel.FK_MinuteData_Stock" FromRole="Stock" ToRole="MinuteData" />
+          <NavigationProperty Name="MinuteDataTesters" Relationship="NeeksDBModel.FK_MinuteDataTester_Stock" FromRole="Stock" ToRole="MinuteDataTester" />
+          <NavigationProperty Name="Sector" Relationship="NeeksDBModel.FK_Stock_Sector" FromRole="Stock" ToRole="Sector" />
+          <NavigationProperty Name="SampleStats" Relationship="NeeksDBModel.FK_Stats_Stock" FromRole="Stock" ToRole="SampleStat" />
+        </EntityType>
+        <Association Name="FK_HistoricalData_Stock">
+          <End Type="NeeksDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="NeeksDBModel.HistoricalData" Role="HistoricalData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistoricalData">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MarketCapitalization_Stock">
+          <End Type="NeeksDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="NeeksDBModel.MarketCapitalization" Role="MarketCapitalization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MarketCapitalization">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MinuteData_Stock">
+          <End Type="NeeksDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="NeeksDBModel.MinuteData" Role="MinuteData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MinuteData">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MinuteDataTester_Stock">
+          <End Type="NeeksDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="NeeksDBModel.MinuteDataTester" Role="MinuteDataTester" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MinuteDataTester">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Sector">
+          <End Type="NeeksDBModel.Sector" Role="Sector" Multiplicity="0..1" />
+          <End Type="NeeksDBModel.Stock" Role="Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sector">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="SectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SampleStat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <Property Name="StDev" Type="Double" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Total_AmtOfTrades" Type="Int64" />
+          <NavigationProperty Name="Stock" Relationship="NeeksDBModel.FK_Stats_Stock" FromRole="SampleStat" ToRole="Stock" />
+        </EntityType>
+        <Association Name="FK_Stats_Stock">
+          <End Type="NeeksDBModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="NeeksDBModel.SampleStat" Role="SampleStat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SampleStat">
+              <PropertyRef Name="StockID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetValuesGroupedBySector_sp_Result">
+          <Property Type="Double" Name="Value" Nullable="true" />
+          <Property Type="String" Name="Sector" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="SectorId" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Stocks_V">
+          <Key>
+            <PropertyRef Name="StockID" />
+            <PropertyRef Name="Symbol" />
+            <PropertyRef Name="Company" />
+          </Key>
+          <Property Name="StockID" Type="Int64" Nullable="false" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Company" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Sector" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exchange" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Industry" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated_MinData" Type="DateTime" Precision="3" />
+          <Property Name="IsDisabled" Type="Boolean" />
+          <Property Name="MarketCap" Type="Int64" />
+          <Property Name="Last_Updated_MC" Type="DateTime" Precision="0" />
+          <Property Name="MostRecent_Stats" Type="DateTime" Precision="3" />
+          <Property Name="MostRecent_DailyData" Type="DateTime" Precision="0" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NeeksDBModelStoreContainer" CdmEntityContainer="NeeksDBEntities">
+          <EntitySetMapping Name="Sectors">
+            <EntityTypeMapping TypeName="NeeksDBModel.Sector">
+              <MappingFragment StoreEntitySet="Sector">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exchanges">
+            <EntityTypeMapping TypeName="NeeksDBModel.Exchange">
+              <MappingFragment StoreEntitySet="Exchange">
+                <ScalarProperty Name="TapeId" ColumnName="TapeId" />
+                <ScalarProperty Name="MIC" ColumnName="MIC" />
+                <ScalarProperty Name="LongName" ColumnName="LongName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoricalDatas">
+            <EntityTypeMapping TypeName="NeeksDBModel.HistoricalData">
+              <MappingFragment StoreEntitySet="HistoricalData">
+                <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="Close" ColumnName="Close" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MarketCapitalizations">
+            <EntityTypeMapping TypeName="NeeksDBModel.MarketCapitalization">
+              <MappingFragment StoreEntitySet="MarketCapitalization">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEXSectors">
+            <EntityTypeMapping TypeName="NeeksDBModel.MEXSector">
+              <MappingFragment StoreEntitySet="MEXSector">
+                <ScalarProperty Name="SectorAssetClassId" ColumnName="SectorAssetClassId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEXSectorDatas">
+            <EntityTypeMapping TypeName="NeeksDBModel.MEXSectorData">
+              <MappingFragment StoreEntitySet="MEXSectorData">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SectorData_V">
+            <EntityTypeMapping TypeName="NeeksDBModel.SectorData_V">
+              <MappingFragment StoreEntitySet="SectorData_V">
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LastUpdatedMinData_V">
+            <EntityTypeMapping TypeName="NeeksDBModel.LastUpdatedMinData_V">
+              <MappingFragment StoreEntitySet="LastUpdatedMinData_V">
+                <ScalarProperty Name="LastUpdatedTime" ColumnName="LastUpdatedTime" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MinuteDataTesters">
+            <EntityTypeMapping TypeName="NeeksDBModel.MinuteDataTester">
+              <MappingFragment StoreEntitySet="MinuteDataTester">
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="AmtOfTrades" ColumnName="AmtOfTrades" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Average" ColumnName="Average" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LastUpdatedMinData_VTester">
+            <EntityTypeMapping TypeName="NeeksDBModel.LastUpdatedMinData_VTester">
+              <MappingFragment StoreEntitySet="LastUpdatedMinData_VTester">
+                <ScalarProperty Name="LastUpdatedTime" ColumnName="LastUpdatedTime" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MinuteDatas">
+            <EntityTypeMapping TypeName="NeeksDBModel.MinuteData">
+              <MappingFragment StoreEntitySet="MinuteData">
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="AmtOfTrades" ColumnName="AmtOfTrades" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Average" ColumnName="Average" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holidays">
+            <EntityTypeMapping TypeName="NeeksDBModel.Holiday">
+              <MappingFragment StoreEntitySet="Holidays">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EarlyClose" ColumnName="EarlyClose" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="NeeksDBModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="IsTop4000" ColumnName="IsTop4000" />
+                <ScalarProperty Name="PercentData_SamplePeriod" ColumnName="PercentData_SamplePeriod" />
+                <ScalarProperty Name="PercentData_LastDay" ColumnName="PercentData_LastDay" />
+                <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
+                <ScalarProperty Name="LastUpdated_MinData" ColumnName="LastUpdated_MinData" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Employees" ColumnName="Employees" />
+                <ScalarProperty Name="SectorID" ColumnName="SectorID" />
+                <ScalarProperty Name="IssueType" ColumnName="IssueType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="Exchange" ColumnName="Exchange" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SampleStats">
+            <EntityTypeMapping TypeName="NeeksDBModel.SampleStat">
+              <MappingFragment StoreEntitySet="SampleStats">
+                <ScalarProperty Name="Total_AmtOfTrades" ColumnName="Total_AmtOfTrades" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StDev" ColumnName="StDev" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetValuesGroupedBySector_sp" FunctionName="NeeksDBModel.Store.GetValuesGroupedBySector_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NeeksDBModel.GetValuesGroupedBySector_sp_Result">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDateRange_Period" FunctionName="NeeksDBModel.Store.GetDateRange_Period" />
+          <EntitySetMapping Name="Stocks_V">
+            <EntityTypeMapping TypeName="NeeksDBModel.Stocks_V">
+              <MappingFragment StoreEntitySet="Stocks_V">
+                <ScalarProperty Name="MostRecent_DailyData" ColumnName="MostRecent_DailyData" />
+                <ScalarProperty Name="MostRecent_Stats" ColumnName="MostRecent_Stats" />
+                <ScalarProperty Name="Last_Updated_MC" ColumnName="Last_Updated_MC" />
+                <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
+                <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
+                <ScalarProperty Name="LastUpdated_MinData" ColumnName="LastUpdated_MinData" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="Exchange" ColumnName="Exchange" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDateRange_StartEnd" FunctionName="NeeksDBModel.Store.GetDateRange_StartEnd" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
